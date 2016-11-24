@@ -28,28 +28,31 @@ mysql> explain salesassociate;
 
 ==========================================================================================================
 
-TABLE #2
-
 mysql> create table quotes(quote_id INT(6) NOT NULL AUTO_INCREMENT,
+    -> date DATE,
     -> saoc_id INT,
-    -> comm_rate FLOAT, 
-    -> status CHAR(10) NOT NULL, 
+    -> c_id INT,
+    -> comm_rate FLOAT,
+    -> status CHAR(10) NOT NULL,
     -> postatus INT(1) NOT NULL,
-    -> PRIMARY KEY(quote_id, saoc_id, c_id),
-    -> FOREIGN KEY(saoc_id) REFERENCES salesassociate(sa_id));
-Query OK, 0 rows affected (0.17 sec)
+    -> PRIMARY KEY(quote_id, saoc_id, c_id, date),
+    -> FOREIGN KEY( saoc_id) REFERENCES salesassociate(sa_id));
+Query OK, 0 rows affected (0.05 sec)
 
 mysql> explain quotes;
-+-----------+----------+------+-----+---------+----------------+
-| Field     | Type     | Null | Key | Default | Extra          |
-+-----------+----------+------+-----+---------+----------------+
-| quote_id  | int(6)   | NO   | PRI | NULL    | auto_increment |
-| saoc_id   | int(11)  | NO   | PRI | 0       |                |
-| c_id      | int(11)  | NO   | PRI | NULL    |                |
-| comm_rate | float    | YES  |     | NULL    |                |
-| status    | char(10) | NO   |     | NULL    |                |
-| postatus  | int(1)   | NO   |     | NULL    |                |
-+-----------+----------+------+-----+---------+----------------+
++-----------+----------+------+-----+------------+----------------+
+| Field     | Type     | Null | Key | Default    | Extra          |
++-----------+----------+------+-----+------------+----------------+
+| quote_id  | int(6)   | NO   | PRI | NULL       | auto_increment |
+| date      | date     | NO   | PRI | 0000-00-00 |                |
+| saoc_id   | int(11)  | NO   | PRI | 0          |                |
+| c_id      | int(11)  | NO   | PRI | 0          |                |
+| comm_rate | float    | YES  |     | NULL       |                |
+| status    | char(10) | NO   |     | NULL       |                |
+| postatus  | int(1)   | NO   |     | NULL       |                |
++-----------+----------+------+-----+------------+----------------+
+7 rows in set (0.00 sec)
+
 
 ==========================================================================================================
 
