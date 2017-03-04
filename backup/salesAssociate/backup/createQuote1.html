@@ -1,0 +1,118 @@
+ 
+<html>
+<head>
+<title>newrow</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+ 
+<body>
+<form  name="lineItems" action="newQuote.php" method="POST">
+  <table border="1" id="tblSample">
+    <tr> 
+      <th colspan="3">Testing</th>
+    </tr>
+    <tr> 
+		<td>1</td>
+		<td><input type="text" name="itemDesc1" id="item1" size="40" onkeypress="keyPressTest(event, this);" /></td>
+		<td><input type="text" name="itemPrice1" id="price1" size="5"/></td>
+		</tr>
+  </table>
+<input name="button2" type="button" onClick="addRowToTable();" value="Add" />
+<input name="button" type="button" onClick="removeRowFromTable();" value="Remove" />
+<input type = "submit" value = "Add Items" />
+<input type = "reset" value = "Clear All" />
+</form>
+</body>
+</html>
+ 
+<SCRIPT LANGUAGE="JavaScript">
+function addRowToTable(){
+  var tbl = document.getElementById('tblSample');
+  var lastRow = tbl.rows.length;
+  // if there's no header row in the table, then iteration = lastRow + 1
+  var iteration = lastRow;
+  var row = tbl.insertRow(lastRow);
+ 
+  // left cell
+  var cellLeft = row.insertCell(0);
+  var textNode = document.createTextNode(iteration);
+  cellLeft.appendChild(textNode);
+ 
+  // right cell
+  var cellRight = row.insertCell(1);
+  var el = document.createElement('input');
+  el.type = 'text';
+  el.name = 'itemDesc' + iteration;
+  el.id = 'itemDesc' + iteration;
+  el.size = 40;
+ 
+  el.onkeypress = keyPressTest;
+  cellRight.appendChild(el);
+ 
+  var cellPrice = row.insertCell(2);
+  var ell = document.createElement('input');
+  ell.type = 'text';
+  ell.name = 'itemPrice' + iteration;
+  ell.id = 'itemPrice' + iteration;
+  ell.size = 5;
+  
+  ell.onkeypress = keyPressTest;
+  cellPrice.appendChild(ell);
+ 
+}
+ 
+function keyPressTest(e, obj){
+  var validateChkb = document.getElementById('chkValidateOnKeyPress');
+  if (validateChkb.checked) {
+    var displayObj = document.getElementById('spanOutput');
+    var key;
+    if(window.event) {
+      key = window.event.keyCode; 
+    }
+    else if(e.which) {
+      key = e.which;
+    }
+    var objId;
+    if (obj != null) {
+      objId = obj.id;
+    } else {
+      objId = this.id;
+    }
+    displayObj.innerHTML = objId + ' : ' + String.fromCharCode(key);
+  }
+}
+function removeRowFromTable(){
+  var tbl = document.getElementById('tblSample');
+  var lastRow = tbl.rows.length;
+  if (lastRow > 2) tbl.deleteRow(lastRow - 1);
+}
+ 
+function openInNewWindow(frm){
+  // open a blank window
+  var aWindow = window.open('', 'TableAddRowNewWindow',
+   'scrollbars=yes,menubar=yes,resizable=yes,toolbar=no,width=400,height=400');
+ 
+  // set the target to the blank window
+  frm.target = 'TableAddRowNewWindow';
+ 
+  // submit
+  frm.submit();
+}
+ 
+function validateRow(frm){
+  var chkb = document.getElementById('chkValidate');
+  if (chkb.checked) {
+    var tbl = document.getElementById('tblSample');
+    var lastRow = tbl.rows.length - 1;
+    var i;
+    for (i=1; i<=lastRow; i++) {
+      var aRow = document.getElementById('txtRow' + i);
+      if (aRow.value.length <= 0) {
+        alert('Row ' + i + ' is empty');
+        return;
+      }
+    }
+  }
+  openInNewWindow(frm);
+}
+</SCRIPT>
